@@ -2,8 +2,10 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from arthub_api.permissions import IsOwnerOrReadOnly
 from .models import Profile
 from .serializers import ProfileSerializer
+
 
 class ProfileList(APIView):
     """
@@ -11,7 +13,9 @@ class ProfileList(APIView):
     """
     def get(self, request):
         profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles, many=True)
+        serializer = ProfileSerializer(
+            profiles, many=True, context={'request': request}
+            )
         return Response(serializer.data)
 
 
@@ -20,6 +24,7 @@ class ProfileDetail(APIView):
     Class for Profile detail views
     """
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self, pk):
         """
@@ -28,6 +33,7 @@ class ProfileDetail(APIView):
         """
         try:
             profile = Profile.objects.get(pk=pk)
+            self.check_object_permissions(self.request, profile)
             return profile
         except Profile.DoesNotExist:
             raise Http404
@@ -38,7 +44,9 @@ class ProfileDetail(APIView):
         using serializers.
         """
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile)
+        serializer = ProfileSerializer(
+            profile, context={'request': request}
+            )
         return Response(serializer.data)
 
 
@@ -47,7 +55,9 @@ class ProfileDetail(APIView):
         Put method to edit Profile fields
         """
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile, data=request.data)
+        serializer = ProfileSerializer(
+            profile, data=request.data, context={'request': request}
+            )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
