@@ -4,14 +4,14 @@ from .models import Profile
 
 class ProfileSerializer(serializers.ModelSerializer):
     """
-    Serializer for profile model
+    The Profile model serializer
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         """
-        function to define if the user
+        Check if the user
         is owner of proifle and return
         results
         """

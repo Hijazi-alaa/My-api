@@ -9,12 +9,15 @@ from .serializers import ProfileSerializer
 
 class ProfileList(APIView):
     """
-    Profile view as a list
+    Profile view class
     """
     def get(self, request):
+        """
+        Profile list view
+        """
         profiles = Profile.objects.all()
         serializer = ProfileSerializer(
-            profiles, many=True, context={'request': request}
+            profiles, many=True, context={"request": request}
             )
         return Response(serializer.data)
 

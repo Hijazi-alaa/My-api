@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     """
-    Profile model
+    Profile model related to User, and every other model is going to connect
+    to this Profile model
     """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
