@@ -9,11 +9,11 @@ from .serializers import ProfileSerializer
 
 class ProfileList(APIView):
     """
-    Profile view class
+    Profile list view class
     """
     def get(self, request):
         """
-        Profile list view
+        get method to get all Profile objects to view
         """
         profiles = Profile.objects.all()
         serializer = ProfileSerializer(
