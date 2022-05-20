@@ -40,7 +40,7 @@ class ProfileDetail(APIView):
             return profile
         except Profile.DoesNotExist:
             raise Http404
-        
+
     def get(self, request, pk):
         """
         Get profile by primary key
@@ -51,7 +51,6 @@ class ProfileDetail(APIView):
             profile, context={'request': request}
             )
         return Response(serializer.data)
-
 
     def put(self, request, pk):
         """
