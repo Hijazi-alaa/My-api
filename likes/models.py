@@ -8,7 +8,9 @@ class Like(models.Model):
     Like model, related to 'owner' and 'post'.
     'owner' is a User instance and 'post' is a Post instance.
     """
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE
+        )
     post = models.ForeignKey(
         Post, related_name='likes', on_delete=models.CASCADE
     )
@@ -18,8 +20,8 @@ class Like(models.Model):
         """
         Like model meta class
         """
-        ordering = ['-created_at']
-        unique_together = ['owner', 'post']
+        ordering = ["-created_at"]
+        unique_together = ["owner", "post"]
 
     def __str__(self):
-        return f'{self.owner} {self.post}'
+        return f"{self.owner} {self.post}"
