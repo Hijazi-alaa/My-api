@@ -11,4 +11,5 @@
 <li>Psycopg2</li>
 <li>Gunicorn</li>
 <li>corsheaders</li>
+<li>Django filters</li>
 </ul>
